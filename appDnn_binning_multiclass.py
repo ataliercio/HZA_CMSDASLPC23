@@ -39,15 +39,14 @@ df1.loc[df.process.str.contains("HZA_signal_600_400"), ['label']] = 7
 
 print(df1.columns)
 
-input_vars = ["met_pt",  "met_phi" , "lep1_Zcand_pt" , "lep1_Zcand_eta" , "lep1_Zcand_phi" , "lep2_Zcand_pt" , "lep2_Zcand_eta" , "lep2_Zcand_phi" , "Zcand_pt", "Zcand_eta" , "Zcand_phi" ,
-              "Zcand_ll_deltaR" ,  "Zcand_ll_deltaPhi" , "Zcand_ll_deltaEta" , "tau1_Hcand_pt" , "tau1_Hcand_eta" ,  "tau1_Hcand_phi" , "tau2_Hcand_pt" , "tau2_Hcand_eta" ,  "tau2_Hcand_phi",
-              "tau2_Hcand_deepTauVSjet", "Hcand_pt" , "Hcand_eta" , "Hcand_phi" , "Hcand_tt_deltaR" , "Hcand_tt_deltaPhi" , "Hcand_tt_deltaEta" ,  "ZHcand_pt" , "ZHcand_eta" , "ZHcand_phi"  ,
-              "ZHcand_deltaR" , "ZHcand_deltaPhi" , "ZHcand_deltaEta" ]
+#add your input vars
+input_vars = ["met_pt"]
 
 print("INPUT VAR for DNN")
 print(input_vars)
 
 #SIGNAL REGION
+#add your signal region
 sel_tightZ = (df1.lep1_Zcand_pfRelIso04_all < 0.15 ) & (df1.lep1_Zcand_tightId) & (df1.lep2_Zcand_pfRelIso04_all < 0.15 ) & (df1.lep2_Zcand_mediumId) 
 sel_tau2   = (df1.tau2_Hcand_iddeepTauVSmu >= 1 )  & (df1.tau2_Hcand_iddeepTauVSe >= 1 ) & (df1.tau2_Hcand_iddeepTauVSjet >= 1 )
 if cat == "1mu1tau": 
@@ -101,65 +100,11 @@ plt.legend(loc='best')
 plt.savefig(PLOT_FOLDER+'h_dnn_score.pdf')
 plt.clf()
 
-#separation in regions according to significance (low purity, high purity)
-
-w = 1/20
-x = [ w*i for i in range(20)]
-x +=[1.]
-print("Array of cuts: ",x)
-max_sig = 0
-x_max = 0
-for cut in x:
-        bkg_h = 0
-        bkg_l = 0
-        signal_h = 0
-        signal_l = 0
-        for item in df.loc[df.process.str.contains("HZA_signal") == False,:].process.unique():
-
-            bkg_h += sum(df.loc[(df.process == item) & (df.class_bkg > cut) ]['weight'])
-            bkg_l += sum(df.loc[(df.process == item) & (df.class_bkg <= cut)]['weight'])
-
-        signal_h = sum(df.loc[df.process.str.contains("HZA_signal_600_100") & (df.class_signal_600_100 > cut )]['weight'])
-        signal_l += sum(df.loc[df.process.str.contains("HZA_signal_600_100") & (df.class_signal_600_100 <= cut)]['weight'])
-
-        print(bkg_h)
-        print(bkg_l)
-
-        #print("ciao ", math.sqrt(bkg_h)/bkg_h)
-        if bkg_l > 0 and bkg_h > 0:
-            if (math.sqrt(bkg_h)/bkg_h > 0.30):        
-                #sig_c = signal_c/math.sqrt(bkg_c)
-                #sig_sb = signal_sb/math.sqrt(bkg_sb)
-                sig_h = math.sqrt(2*((signal_h+bkg_h)*math.log(1+signal_h/bkg_h)-signal_h))
-                sig_l = math.sqrt(2*((signal_l+bkg_l)*math.log(1+signal_l/bkg_l)-signal_l))
-                sig_tot = math.sqrt(sig_h**2+sig_l**2)
-                print("tot sig ", sig_tot)
-                if sig_tot > max_sig :
-                    max_sig = sig_tot
-                    x_max = cut
-
-
-print("Optimal cut on dnn score for division in regions: ",x_max)
-print("Significance max: ",max_sig)
+#Optimize the choice of the cut on the DNN score
 
 x_max = 0.6
-###PLOT
-###PLOT
-for item in df.process.unique():
-    if "600_200" in item:
 
-        (n_l,b_l,_) = plt.hist(df.loc[(df.process == item) & (df.class_signal_600_200<= x_max),:]['class_signal_600_200'],
-                   weights = df.loc[(df.process == item) & (df.class_signal_600_200<= x_max),:]['weight'],
-                   label=str(item)+'low purity', histtype=("step"), bins=x)
-        (n_h,b_h,_) = plt.hist(df.loc[(df.process == item) & (df.class_signal_600_200 > x_max),:]['class_signal_600_200'],
-                   weights = df.loc[(df.process == item) & (df.class_signal_600_200 > x_max),:]['weight'],
-                   label=str(item)+'high purity', histtype=("step"), bins=x)
-plt.legend(loc = 'best')
-plt.xlabel('dnn score')
-plt.yscale('log')
-
-plt.savefig(PLOT_FOLDER+'h_dnn_score_divided.pdf')
-plt.clf()
+print("Optimal cut on dnn score for division in regions: ",x_max)
 
 ##SAVE HISTOGRAMS 
 EDGES_H  = np.arange(0,500, 25, dtype=float)
@@ -177,6 +122,7 @@ list =[
 ]
 
 ########FR DICT
+#add your FR values
 fr_dict = {"1mu1tau" : 52,
            "1ele1tau": 12,
            "2tau"    : 99}

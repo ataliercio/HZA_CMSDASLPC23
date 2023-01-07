@@ -147,7 +147,7 @@ The main sources of non-prompt leptons are non-isolated electrons and muons comi
 
 In this section we will consider a fake muon (or tau) any jet mis-reconstructed as a lepton and any lepton originating from a heavy meson decay. Similarly, any electron originating from a photon conversion will be considered a fake electron.
 
-The rate of these background processes is estimated by measuring the fe, fμ and fτ probabilities for fake electrons, fake muons and fake taus which do pass the loose selection criteria to also pass the final selection criteria (defined in the section above). These probabilities, referred to as fake rates, are applied in dedicated control samples in order to extract the expected background yield in the signal region.
+The rate of these background processes is estimated by measuring the $f_e$, $f_μ$ and $f_τ$ probabilities for fake electrons, fake muons and fake taus which do pass the loose selection criteria to also pass the final selection criteria (defined in the section above). These probabilities, referred to as fake rates, are applied in dedicated control samples in order to extract the expected background yield in the signal region.
 
 In few words you have to select events with a good Z + loose lepton where we are assuming that the loose lepton is a mis-identify (fake) lepton. You have to calculate the probability that the loose lepton passes the tight id criteria, so basically the probability that a bad object can fall in your signal region (don't worry it's just a ratio : N_events_tight_lepton/N_events_loose_lepton). 
 
@@ -161,14 +161,14 @@ Have fun!
 
 ## ZX estimation
 
-If you are at this point it means that you have computed the fe, fμ and fτ curves, good job! But that was the easy part... now in order to estimate the ZX contribution in our SR, we have to apply the fake rate in these CR:
+If you are at this point it means that you have computed the $f_e$, $f_μ$ and $f_τ$ curves, good job! But that was the easy part... now in order to estimate the ZX contribution in our SR, we have to apply the fake rate in these CR:
 
 3P1F: Z + 1 lepton1 good + 1 lepton2 fake, Z + 1 lepton1 fake + 1 lepton2 good, we can name those as CR10 and CR01
 2P2F: Z + 2 fake leptons we can name this as CR00
 
 The ZX yield is:
 
-ZX = CR10 + CR01 - CR00 = N10*f1/(1-f1) + N01*f2/(1-f2) - N00*f1*f2/(1-f1)\(1-f2)
+$$ZX = CR10 + CR01 - CR00 = N10 \frac{f1}{1-f1} + N01 \frac{f2}{1-f2} - N00 \frac{f1f2}{(1-f1)(1-f2)}$$
 
 To estimate this number you will need all the data and all the mc, you can find another parquet file here.
 
@@ -180,7 +180,7 @@ One more thing: you have to produce plots for CR01, CR10, CR00 to check that the
 
 I'll explain the procedure only for CR01.
 
-The yield in CR01 for each process is:  CR01 = N01*(1-f1)*f2 please try to justify this formula.
+The yield in CR01 for each process is:  $$CR01 = N01 (1-f1)f2$$ please try to justify this formula.
 
 Have fun!
 
