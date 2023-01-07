@@ -9,6 +9,8 @@ The H -> Z A -> llττ search is a beyond SM analysis aiming to investigate the 
 
 This scenario is mainly inspired by models with two Higgs doublets (2HDM) [1](https://arxiv.org/pdf/1106.0034.pdf). In a 2HDM model two doublets of Higgs fields are present, as opposed to the single one of the SM, giving rise to two neutral CP-even scalars (h, H), one neutral CP-odd pseudo-scalar (A), and two charged scalars (H+, H-).
 
+![plot](./images/2hdm.png) ![plot](./images/process.png) 
+
 The light h scalar is generally identified with the 125 GeV scalar resonance discovered in 2012 and in order to be consistent with the SM-like properties of the latter, one must consider a limited part of the parameter space (the so-called “alignment limit”). The 2HDM models are attractive because they allow generation of the observed asymmetry in the Universe between matter and anti-matter. Another important motivation is Supersymmetry, which belongs to the broad class of 2HDMs.
 
 Supersymmetric models can provide an elegant solution to the naturalness issue. Supersymmetry is also attractive because it generally includes a candidate for particle dark matter and can possibly lay down the bases for the unification of forces. Axion models, which would explain how the strong interaction does not violate the CP symmetry, would also give rise to an effective low-energy theory with two Higgs doublets. Finally, it has also been noted that certain realizations of 2HDMs can accommodate the muon g-2 anomaly without violating the present theoretical and experimental constraints.
@@ -77,6 +79,8 @@ In this analysis we will deal with muons, electrons and taus:
 
 - taus: those leptons decay very soon and we can only reconstruct them by looking at the products decay. They go mainly into hadrons (jets) but also into leptons + neutrinos. It goes without saying that the reconstruction of the taus is way more complicated with respect to muons and electrons, but they also provide a very clear signature. In particular we can identify those particles mainly with Machine Learing methods (as you will see soon).
 
+![plot](./images/taudecay.png)
+
 Other few things to have in mind is that we want to identify the 4 leptons that are in our signal region (H -> Z A -> llττ) and we want to disentagle those 4 leptons from all the other processes that can generate such a signature.
 
 ## Signal and background samples
@@ -127,7 +131,7 @@ After the Z selection, we have to select the taus coming from the A, depending o
 
 You have to implement both of this selections in the analysis macro `ZATolltautau.py`.
 
-After having those 3 regions we want to make sure that our signal is well reconstructed. We can do this by tightening or loosening cuts on the objects, in particular we are asking you to choose the best cut on the identification of the object (you can play with tau, electron and muon IDs). The best choice is the one that has the highest S\sqrt(B) value.
+After having those 3 regions we want to make sure that our signal is well reconstructed. We can do this by tightening or loosening cuts on the objects, in particular we are asking you to choose the best cut on the identification of the object (you can play with tau, electron and muon IDs). The best choice is the one that has the highest $S / \sqrt{B}$ value.
 
 To run the macro you have to do this:
 
@@ -267,10 +271,13 @@ Expected 97.5%: +2 sigma upper limit value
 
 Ideally you will have to run this command for each mass point and then plot a 2D scan of the upper limit vs the mA mass.
 
+Here you can see the Run1 results
+
+![plot](./images/limits.jpg)
+
 ## Result interpretation
 
 Now the stage is yours!
 
 We are leaving! Bye!!
-
 
