@@ -60,6 +60,13 @@ source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-centos7-gcc11-opt/setup.sh
 source bamboodev/bamboovenv/bin/activate
 ```
 
+You'll need also a valide proxy:
+
+```
+voms-proxy-init -voms cms
+export X509_USER_PROXY=~/.x509up_u`id -u`
+```
+
 ## Quick reminder of object reconstruction
 
 In this analysis we will deal with muons, electrons and taus:
@@ -122,6 +129,12 @@ You have to implement both of this selections in the analysis macro `ZATolltauta
 
 After having those 3 regions we want to make sure that our signal is well reconstructed. We can do this by tightening or loosening cuts on the objects, in particular we are asking you to choose the best cut on the identification of the object (you can play with tau, electron and muon IDs). The best choice is the one that has the highest S\sqrt(B) value.
 
+To run the macro you have to do this:
+
+```
+bambooRun -m  ZAtolltautau_DAS.py:ZhToLLTauTau samples_2018UL_try_DAS.yml --envConfig=../../cern.ini -o /eos/home-a/atalierc/try_DAS/ --maxFiles 1
+```
+
 Have fun!
 
 ## Fake rate estimation
@@ -141,6 +154,8 @@ In few words you have to select events with a good Z + loose lepton where we are
 This procedure has to be done on data and you have to remember that you have to subtract from data the mc that has a Z + a real lepton (I'm talking about the WZ process in which you have one Z and one lepton coming from the W decay).
 
 To help you, we prepared for you 3 parquet files, one for each category, with a Z+l for data and VV processes.
+
+You can play with `FR_muons.py`
 
 Have fun!
 
@@ -169,6 +184,8 @@ The yield in CR01 for each process is:  CR01 = N01*(1-f1)*f2 please try to justi
 
 Have fun!
 
+You can play with `calc_FR_muon_new.py`
+
 ## ML training
 
 In parallel with the FR/ZX estimation we can apply ML to our analysis.
@@ -186,6 +203,8 @@ To ensure that the ML is correctly working you have to check mainly two things:
 - the loss curve for training and testing has to have the same shape decreasing to a plateau
 
 - the area under the ROC curve has to be high (> 0.80)
+
+Please check `dnn_multiclass.py`
 
 ## ML application
 
@@ -215,7 +234,7 @@ git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester
 scram b
 ```
 
-And we have to write a datacard.
+And we have to write a datacard (check macros in `combine` folder)
 
 A datacard is a txt file were all the yields and all the systematics are explicited, you can feed the datacard to combine and it will run the fit.
 
