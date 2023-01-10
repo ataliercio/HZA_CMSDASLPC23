@@ -93,14 +93,14 @@ class ZhToLLTauTau(NanoAODHistoModule):
 
         isoMuFilterMask = 0xA
 
-        #Muons that fired the trigger
+        #Trigger
         hasTriggerFired = noSel.refine("passSingleMuonHLT", cut=op.OR(*(singleMuonTriggers))) 
 
         plots = []
 
         triggerObj = op.select(t.TrigObj, lambda trgObj: op.AND( trgObj.id == 13,
                                                                  (trgObj.filterBits & isoMuFilterMask) )) 
-
+        #-->Add missing requirements (see slides)
         muons = op.sort(op.select(t.Muon, lambda mu : op.AND(
             mu.pt > 10.,
             op.abs(mu.dz ) < 1.,
@@ -113,9 +113,10 @@ class ZhToLLTauTau(NanoAODHistoModule):
         taus = op.select(t.Tau, lambda tau : op.AND(
             tau.p4.Pt() > 20., 
             op.abs(tau.p4.Eta()) < 2.4 ,
-            tau.dz < 0.2
+            op.abs(tau.dz) < 0.2
         ))
 
+        #Select only taus not in the proximity of electrons/muons 
         cleanedTaus = op.select(taus, lambda it : op.AND(
                                                   op.NOT(op.rng_any(electrons, lambda ie : op.deltaR(it.p4, ie.p4) < 0.3 )),
                                                   op.NOT(op.rng_any(muons, lambda im : op.deltaR(it.p4, im.p4) < 0.3 ))
@@ -125,18 +126,16 @@ class ZhToLLTauTau(NanoAODHistoModule):
 
          
         mZ = 91.1876
-        ##ask that at least the first muon has a pt higher than the trigger threshold
-        pairsMuMu = op.combine(muons, N=2, pred=lambda l1,l2 : op.AND(l1.charge != l2.charge))#,
+        
+        pairsMuMu = op.combine(muons, N=2, pred=lambda l1,l2 : op.AND(l1.charge != l2.charge))# -->Ask that at least the first muon has a pt higher than the trigger threshold
 
-        #select the best Z asking that the invariant mass is the closest to mZ - trick use op.abs(op.invariant_mass(....))
+        #--> Select the best Z asking that the invariant mass is the closest to mZ - trick use op.abs(op.invariant_mass(....))
         bestZ = op.rng_min_element_by(pairsMuMu, lambda ll : ll[0].p4.pt + ll[1].p4.pt))
 
-        #ask to have a good Z with the refine option
+        #Ask to have a good Z with the refine option
         hasZmm      = hasTriggerFired.refine("hasZmm",  cut=[op.rng_len(pairsMuMu) > 0] )
         hasZmmTight = hasZmm.refine("hasZmmTight",  cut=[ bestZ[0].pfRelIso04_all < 0.15,
-                                                          bestZ[0].tightId ])
-        #add requirements for the second muon
-
+                                                          bestZ[0].tightId ]) #--> Add requirements for the second muon
        
      
         plots += self.plotPairs(bestZ, hasZmm, "osMuMu")
@@ -144,32 +143,34 @@ class ZhToLLTauTau(NanoAODHistoModule):
     
 
         categories = []
-        categories.append(category(nMuons=1, nElectrons=0, nTaus=1))
-        #add other categories
+        categories.append(category(nMuons=1, nElectrons=0, nTaus=1))  #--> In the same way, add the other categories
+       
 
         plots.append(yields)
         yields.add(noSel, title="NoSel")
         yields.add(hasTriggerFired, title="TriggerFired")
         yields.add(hasZmm, title="Zloose")
-        #add other yields
+        #-->add other yields
 
 
         for cat in categories:
-
+            #muons not used for the Z candidate
             otherLeptons = op.select(muons, partial(lambda l,oz=None : op.AND(l.idx != oz[0].idx, l.idx != oz[1].idx), oz=bestZ))
-
+            
+            #Muon category
             if cat.nMuons() > 0:
-                #add other categories
                 oslep3lep4 = op.combine((otherLeptons, cleanedTaus), pred=lambda mu,tau : mu.charge != tau.charge)
-        
-                hasSeconPair = hasZmmTight.refine(f"hasSeconPairCategory_{cat}", cut=[op.rng_len(oslep3lep4) > 0])
-
-                yields.add(hasSeconPair, title=f"With a higgs pair cadidate {cat}")
+            #--> Add the other categories
+            
+            bestH = op.rng_max_element_by(oslep3lep4, lambda ll : ll[0].p4.Pt()+ll[1].p4.Pt())
+            hasSeconPair = hasZmmTight.refine(f"hasSeconPairCategory_{cat}", cut=[op.rng_len(oslep3lep4) > 0])
+            yields.add(hasSeconPair, title=f"With a higgs pair cadidate {cat}")
 
         return plots
 
     def plotPairs(self, pair, sel, category):
-
+        
+            #-->Feel free to add whatever plot you are interested in
             plots = []
             plots.append(Plot.make1D(f"h_{category}_mll", op.invariant_mass(pair[0].p4, pair[1].p4), sel, EquidistantBinning(100, 20., 200.), title=" pair invariant mass", xTitle= "mll (GeV)"))
             plots.append(Plot.make1D(f"h_{category}_lep1_pT", pair[0].p4.Pt(), sel, EquidistantBinning(100, 20., 200.), title=" lepton1 pT", xTitle= "pT (GeV)"))
