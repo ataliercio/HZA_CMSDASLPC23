@@ -157,7 +157,7 @@ In few words you have to select events with a good Z + loose lepton where we are
 
 This procedure has to be done on data and you have to remember that you have to subtract from data the mc that has a Z + a real lepton (I'm talking about the WZ process in which you have one Z and one lepton coming from the W decay).
 
-To help you, we prepared for you 3 parquet files, one for each category, with a Z+l for data and VV processes.
+To help you, we prepared for you 3 parquet files (here `/eos/uscms/store/user/cmsdas/2023/long_exercises/HZA/Fake_Rate/`), one for each category, with a Z+l for data and VV processes.
 
 You can play with `FR_muons.py`
 
@@ -188,7 +188,7 @@ The yield in CR01 for each process is:  $$CR01 = N01 (1-f1)f2$$ please try to ju
 
 Have fun!
 
-You can play with `calc_FR_muon_new.py`
+You can play with `calc_FR_muon_new.py`, please find here the parquet input files: `/eos/uscms/store/user/cmsdas/2023/long_exercises/HZA/Fake_rate_application/`
 
 ## ML training
 
@@ -208,7 +208,7 @@ To ensure that the ML is correctly working you have to check mainly two things:
 
 - the area under the ROC curve has to be high (> 0.80)
 
-Please check `dnn_multiclass.py`
+Please check `dnn_multiclass.py`, please find here the parquet input files: `/eos/uscms/store/user/cmsdas/2023/long_exercises/HZA/dnn_limits/`
 
 ## ML application
 
