@@ -22,14 +22,14 @@ if os.environ["VIRTUAL_ENV"] == "":
     exit(-1)
 
 print(os.environ["VIRTUAL_ENV"])
-print("{0}/../ClassicSVfit/interface".format(os.environ["VIRTUAL_ENV"]))
+#print("{0}/../ClassicSVfit/interface".format(os.environ["VIRTUAL_ENV"]))
 
-loadDependency( headers="SVfitBambooProducer.h",
-                includePath="{0}/../ClassicSVfit/interface".format(os.environ["VIRTUAL_ENV"]),
-                dynamicPath="{0}/../build-ClassicSVfit-FastMTT/src".format(os.environ["VIRTUAL_ENV"]), 
-                libraries="ClassicSVfit")
+#loadDependency( headers="SVfitBambooProducer.h",
+#                includePath="{0}/../ClassicSVfit/interface".format(os.environ["VIRTUAL_ENV"]),
+#                dynamicPath="{0}/../build-ClassicSVfit-FastMTT/src".format(os.environ["VIRTUAL_ENV"]), 
+#                libraries="ClassicSVfit")
                 
-svFitBambooProducer = op.define("SVfitBambooProducer", 'auto <<name>> = SVfitBambooProducer();')
+#svFitBambooProducer = op.define("SVfitBambooProducer", 'auto <<name>> = SVfitBambooProducer();')
 
 
 class category:
