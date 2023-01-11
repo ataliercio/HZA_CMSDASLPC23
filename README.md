@@ -209,7 +209,7 @@ To ensure that the ML is correctly working you have to check mainly two things:
 
 - the area under the ROC curve has to be high (> 0.80)
 
-Please check `dnn_multiclass.py`, please find here the parquet input files: `/eos/uscms/store/user/cmsdas/2023/long_exercises/HZA/dnn_limits/`
+Please check `dnn_multiclass.py`, please find here the parquet input files: `/eos/uscms/store/user/cmsdas/2023/long_exercises/HZA/dnn_limits2/`
 
 ## ML application
 
