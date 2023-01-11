@@ -68,6 +68,7 @@ You'll need also a valide proxy:
 voms-proxy-init -voms cms
 export X509_USER_PROXY=~/.x509up_u`id -u`
 ```
+Once bamboo is installed you can go in the folder `bamboodev/bamboo/examples` and clone this repository.
 
 ## Quick reminder of object reconstruction
 
@@ -113,7 +114,7 @@ The main processes contributing to the llττ final state are:
 
 - top processes (ttW, ttZ, ttjets and single top production): those processes can easly have leptons in the final state
 
-Those signal and background processes are specified in teh `sample_2018UL_all.yml` file that you will have to use
+Those signal and background processes are specified in the `sample_2018UL_all.yml` file that you will have to use
 
 ## Event selection
 
@@ -136,7 +137,7 @@ After having those 3 regions we want to make sure that our signal is well recons
 To run the macro you have to do this:
 
 ```
-bambooRun -m  ZAtolltautau_DAS.py:ZhToLLTauTau samples_2018UL_try_DAS.yml --envConfig=../../cern.ini -o /eos/home-a/atalierc/try_DAS/ --maxFiles 1
+bambooRun -m  ZAtolltautau.py:ZhToLLTauTau samples_2018UL_try.yml --envConfig=../cern.ini -o test --maxFiles=1
 ```
 
 Have fun!
