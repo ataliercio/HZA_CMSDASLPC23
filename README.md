@@ -71,6 +71,12 @@ export X509_USER_PROXY=~/.x509up_u`id -u`
 ```
 Once bamboo is installed you can go in the folder `bamboodev/bamboo/examples` and clone this repository.
 
+Before running on the samples in samples_2018UL_all.yml, you will need to change it slightly. Some samples refer to a file (Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt) that is on the CERN AFS. We included this file in this repo, so you will need to change its address in the .yml file.
+For example:
+/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt
+to
+/uscms/home/[USER]/nobackup/bamboodev/bamboo/examples/HZAlltautau_bamboo/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt
+
 ## Quick reminder of object reconstruction
 
 In this analysis we will deal with muons, electrons and taus:
