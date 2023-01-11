@@ -60,6 +60,7 @@ Each time that you open a new session:
 ```bash
 source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-centos7-gcc11-opt/setup.sh
 source bamboodev/bamboovenv/bin/activate
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 ```
 
 You'll need also a valide proxy:
