@@ -130,7 +130,7 @@ class ZhToLLTauTau(NanoAODHistoModule):
         pairsMuMu = op.combine(muons, N=2, pred=lambda l1,l2 : op.AND(l1.charge != l2.charge))# -->Ask that at least the first muon has a pt higher than the trigger threshold
 
         #--> Select the best Z asking that the invariant mass is the closest to mZ - trick use op.abs(op.invariant_mass(....))
-        bestZ = op.rng_min_element_by(pairsMuMu, lambda ll : ll[0].p4.pt + ll[1].p4.pt))
+        bestZ = op.rng_min_element_by(pairsMuMu, lambda ll : ll[0].p4.Pt()+ll[1].p4.Pt())
 
         #Ask to have a good Z with the refine option
         hasZmm      = hasTriggerFired.refine("hasZmm",  cut=[op.rng_len(pairsMuMu) > 0] )
